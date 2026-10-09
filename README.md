@@ -1,3 +1,11 @@
+<p align="center">
+  <a href="README.md">🇬🇧 English</a> |
+  <a href="README_FA.md">IRفارسی</a>
+</p>
+
+<details>
+<summary><strong>🇬🇧 English</strong></summary>
+
 # 🎮 Minecraft Server Auto Setup
 
 A Bash script that automates the setup of a Minecraft Java Edition server, including Java installation, server configuration, and Playit.gg tunnel setup.
