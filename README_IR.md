@@ -3,54 +3,47 @@
   <a href="README_IR.md">IR فارسی</a>
 </p>
 
-# 🎮 Minecraft Server Auto Setup
+# 🎮 راه‌اندازی خودکار سرور ماینکرفت
 
-![License](https://img.shields.io/github/license/launchercs/script-run-server-minecraft)
-![Last Commit](https://img.shields.io/github/last-commit/launchercs/script-run-server-minecraft)
-![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Termux%20%7C%20Windows-blue)
-![Shell](https://img.shields.io/badge/shell-bash%20%7C%20batch-green)
+اسکریپت‌های چندسکویی برای راه‌اندازی خودکار سرور **Minecraft Java Edition** — نصب Java، پیکربندی، بکاپ world، Aikar Flags و تونل Playit.gg در یک اجرا.
 
-Cross-platform scripts that automate setting up a **Minecraft Java Edition** server — Java installation, configuration, world backup, Aikar flags, and Playit.gg tunnel — all in one run.
+## 📑 فهرست
 
-## 📑 Table of Contents
+- [امکانات](#-امکانات)
+- [پیش‌نیازها](#-پیش‌نیازها)
+- [نصب](#-نصب)
+- [استفاده](#-استفاده)
+- [متغیرهای محیطی](#-متغیرهای-محیطی)
+- [عیب‌یابی](#-عیب‌یابی)
+- [سوالات متداول](#-سوالات-متداول)
+- [مشارکت](#-مشارکت)
+- [مجوز](#-مجوز)
 
-- [Features](#-features)
-- [Requirements](#-requirements)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [Environment Variables](#-environment-variables)
-- [Troubleshooting](#-troubleshooting)
-- [FAQ](#-faq)
-- [Contributing](#-contributing)
-- [License](#-license)
+## ✨ امکانات
 
-## ✨ Features
+- 🚀 **راه‌اندازی خودکار** — همه‌چیز نصب و پیکربندی می‌شود
+- 🧩 **چند توزیعی** — Debian/Ubuntu، Fedora/RHEL، Arch، openSUSE، Alpine
+- ☕ **Adoptium JDK** — نصب نسخه مناسب (8/11/17/21) مستقل از مخازن توزیع
+- 🎯 **تشخیص نسخه Java** — بر اساس نسخه ماینکرفت
+- 📦 **نصب پیش‌نیازها** — فقط چیزهایی که لازم است
+- 🎮 **آخرین نسخه** — از manifest رسمی موجانگ
+- 🧠 **تنظیم RAM** — آرگومان، env یا پرسش تعاملی
+- 🛠️ **Aikar Flags** — دو پروفایل (< 12GB و ≥ 12GB)
+- 💽 **بکاپ خودکار** — فایل `.tar.gz` قبل از جایگزینی jar
+- 🌐 **Playit.gg** — تونل بدون نیاز به port-forward
+- 🖥️ **screen** — اجرای پایدار سرور
+- ♻️ **سرویس systemd** — استارت خودکار در بوت
+- 🧪 **حالت dry-run** — پیش‌نمایش بدون تغییر
 
-- 🚀 **Automated Setup** — installs and configures everything.
-- 🧩 **Multi-Distro Linux** — Debian/Ubuntu, Fedora/RHEL, Arch, openSUSE, Alpine.
-- ☕ **Adoptium (Temurin) JDK** — installs the correct JDK (8 / 11 / 17 / 21).
-- 🎯 **Java Version Detection** — matches Minecraft release.
-- 📦 **Automatic Dependencies** — only what each distro needs.
-- 🎮 **Latest Minecraft Version** — from Mojang's official manifest.
-- 🧠 **RAM Configuration** — CLI arg, env var, or interactive prompt.
-- 🛠️ **Aikar Flags** — two presets (< 12 GB and ≥ 12 GB).
-- ⚙️ **Auto Configuration** — generates `start.sh` + `server.properties`.
-- 🔒 **Safe Re-run** — preserves `world`, `eula.txt`, `server.properties`.
-- 💽 **Automatic World Backup** — `.tar.gz` before jar replacement.
-- 🌐 **Playit.gg Integration** — public tunnel, no port-forwarding.
-- 🖥️ **Screen Support** — persistent terminal session.
-- ♻️ **Optional systemd Service** — auto-start on boot.
-- 🧪 **Dry-run Mode** — preview without changes.
+## 📋 پیش‌نیازها
 
-## 📋 Requirements
-
-| Platform | Requirements |
+| پلتفرم | نیازمندی‌ها |
 |---|---|
-| 🐧 Linux | `apt-get` / `dnf` / `pacman` / `zypper` / `apk`, internet, `sudo`, ≥ 3 GB free disk |
-| 📱 Termux | Install from [F-Droid](https://f-droid.org/en/packages/com.termux/) (not Play Store) |
-| 🪟 Windows | Windows 10/11 with `winget` (App Installer) |
+| 🐧 Linux | `apt-get` / `dnf` / `pacman` / `zypper` / `apk`، اینترنت، `sudo`، حداقل ۳GB دیسک |
+| 📱 Termux | از [F-Droid](https://f-droid.org/en/packages/com.termux/) نصب کن (نه Play Store) |
+| 🪟 Windows | ویندوز ۱۰/۱۱ با `winget` (App Installer) |
 
-## 🚀 Installation
+## 🚀 نصب
 
 ```bash
 git clone https://github.com/launchercs/script-run-server-minecraft.git
@@ -58,14 +51,14 @@ cd script-run-server-minecraft
 chmod +x Linux-setup-run.sh termux-setup-run.sh
 ```
 
-## 🎮 Usage
+## 🎮 استفاده
 
 ### Linux
 
 ```bash
-./Linux-setup-run.sh                       # interactive
-./Linux-setup-run.sh --ram 4096 -v 1.21.4  # explicit
-./Linux-setup-run.sh --dry-run             # preview
+./Linux-setup-run.sh                       # تعاملی
+./Linux-setup-run.sh --ram 4096 -v 1.21.4  # صریح
+./Linux-setup-run.sh --dry-run             # پیش‌نمایش
 ```
 
 ### Termux
@@ -80,61 +73,61 @@ chmod +x Linux-setup-run.sh termux-setup-run.sh
 windows-setup-run.bat 4096 1.21.4
 ```
 
-### Running the server
+### اجرای سرور
 
 ```bash
 ./start.sh
-screen -S mc ./start.sh      # Ctrl+A then D to detach
-screen -r mc                 # reattach
+screen -S mc ./start.sh      # خروج: Ctrl+A سپس D
+screen -r mc                 # بازگشت
 ```
 
-## 🔧 Environment Variables
+## 🔧 متغیرهای محیطی
 
-| Variable | Description | Default |
+| متغیر | توضیح | پیش‌فرض |
 |---|---|---|
-| `MC_RAM` | RAM in MB | `2048` |
-| `MC_VERSION` | Minecraft version | `latest` |
-| `PLAYIT_SECRET` | Playit.gg token | — |
-| `LOG_FILE` | Log path | `setup.log` |
+| `MC_RAM` | RAM به مگابایت | `2048` |
+| `MC_VERSION` | نسخه ماینکرفت | `latest` |
+| `PLAYIT_SECRET` | توکن Playit.gg | — |
+| `LOG_FILE` | مسیر لاگ | `setup.log` |
 
-## 🐛 Troubleshooting
+## 🐛 عیب‌یابی
 
-| Problem | Fix |
+| مشکل | راه‌حل |
 |---|---|
-| Java not installed | Check Adoptium repo: `java -version` |
-| Port 25565 busy | `ss -tulpn \| grep 25565` then kill |
-| Playit.gg not connecting | Re-run `playit`, reset token |
-| World lost | Restore from `world-backup-*.tar.gz` |
-| Permission errors | Run with `sudo` (Linux) or as admin (Windows) |
+| Java نصب نیست | `java -version` را چک کن |
+| پورت ۲۵۵۶۵ اشغال است | `ss -tulpn \| grep 25565` و kill |
+| Playit وصل نمی‌شود | `playit` را دوباره اجرا و توکن را بازنشانی کن |
+| world از دست رفت | از `world-backup-*.tar.gz` بازیابی کن |
+| خطای دسترسی | با `sudo` (لینوکس) یا Administrator (ویندوز) |
 
-Verbose logs:
+لاگ verbose:
 
 ```bash
 bash -x ./Linux-setup-run.sh --ram 2048
 ```
 
-## ❓ FAQ
+## ❓ سوالات متداول
 
-**Does it work on Raspberry Pi?** Yes — use Alpine or Debian ARM, ≥ 1 GB RAM recommended.
+**روی رزبری‌پای کار می‌کند؟** بله — Alpine یا Debian ARM، حداقل ۱GB RAM.
 
-**Forge/Fabric support?** No, Vanilla only. Replace `server.jar` manually after setup.
+**از Forge/Fabric پشتیبانی می‌کند؟** خیر، فقط Vanilla. بعد از راه‌اندازی `server.jar` را دستی عوض کن.
 
-**Multiple servers?** Yes — copy folder, change `server-port`.
+**چند سرور همزمان؟** بله — پوشه را کپی و `server-port` را تغییر بده.
 
-## 🤝 Contributing
+## 🤝 مشارکت
 
-1. Fork the repo
+1. Fork کن
 2. `git checkout -b feature/amazing`
 3. `git commit -m 'Add amazing feature'`
 4. `git push origin feature/amazing`
-5. Open a Pull Request
+5. Pull Request باز کن
 
-Run before submitting:
+قبل از ارسال:
 
 ```bash
 shellcheck Linux-setup-run.sh termux-setup-run.sh common/lib.sh
 ```
 
-## 📜 License
+## 📜 مجوز
 
-MIT — see [LICENSE](LICENSE).
+MIT — فایل [LICENSE](LICENSE) را ببین.
