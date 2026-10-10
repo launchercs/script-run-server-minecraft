@@ -38,24 +38,28 @@ if exist world (
   powershell -Command "Compress-Archive -Path 'world' -DestinationPath 'world-backup-!ts!.zip' -Force"
 )
 
-REM ---------- دانلود server.jar ----------
+REM ---------- دانلود server.jar (اصلاح شده) ----------
 echo [INFO] دریافت آخرین نسخه از Mojang...
 powershell -Command ^
   "$m = Invoke-RestMethod 'https://launchermeta.mojang.com/mc/game/version_manifest.json';" ^
   "$v = if ('%MC_VERSION%' -eq 'latest') { $m.latest.release } else { '%MC_VERSION%' };" ^
   "$vu = ($m.versions | Where-Object id -eq $v).url;" ^
   "$j = Invoke-RestMethod $vu;" ^
-  "Invoke-WebRequest $j.downloads.server.url -OutFile 'server.jar';" ^
+  "Invoke-WebRequest -Uri $j.downloads.server.url -OutFile 'server.jar';" ^
   "Write-Host '[ OK ] server.jar دانلود شد.'"
 
 REM ---------- ساخت start.bat ----------
-> start.bat echo @echo off
->>start.bat echo java -Xms%RAM%M -Xmx%RAM%M -XX:+UseG1GC -XX:+ParallelRefProcEnabled -jar server.jar nogui
+(
+  echo @echo off
+  echo setlocal enabledelayedexpansion
+  echo title Minecraft Server
+  echo java -Xms%RAM%M -Xmx%RAM%M -XX:+UseG1GC -XX:+ParallelRefProcEnabled -jar server.jar nogui
+) > start.bat
 echo [ OK ] start.bat ساخته شد.
 
 REM ---------- server.properties ----------
 if not exist server.properties (
-  > server.properties (
+  (
     echo motd=§aMinecraft Server §7^| §ePowered by script-run-server-minecraft
     echo server-port=25565
     echo max-players=20
@@ -63,22 +67,24 @@ if not exist server.properties (
     echo difficulty=normal
     echo gamemode=survival
     echo view-distance=10
-  )
+    echo simulation-distance=8
+  ) > server.properties
   echo [ OK ] server.properties ساخته شد.
 )
 
 REM ---------- EULA ----------
 if not exist eula.txt (
-  echo eula=true> eula.txt
+  echo eula=true > eula.txt
   echo [ OK ] eula.txt ساخته شد.
 )
 
+REM ---------- پایان ----------
 echo.
 echo ==========================================
 echo   🎉 راهاندازی کامل شد!
 echo ==========================================
 echo   اجرای سرور:  start.bat
-echo   تونل playit: playit.exe (اگر نصب باشد)
+echo   تنظیمات:     server.properties
 echo.
 pause
 endlocal
