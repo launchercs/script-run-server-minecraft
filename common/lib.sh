@@ -115,35 +115,37 @@ write_start_script() {
 
   if [ "$ram" -ge 12288 ]; then
     # Aikar flags برای سرورهای بزرگ
-    cat > start.sh <<EOF
+    cat > start.sh <<'EOF'
 #!/usr/bin/env bash
-java -Xms${ram}M -Xmx${ram}M \\
-  -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 \\
-  -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC \\
-  -XX:+AlwaysPreTouch -XX:G1NewSizePercent=40 -XX:G1MaxNewSizePercent=50 \\
-  -XX:G1HeapRegionSize=16M -XX:G1ReservePercent=20 \\
-  -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 \\
-  -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 \\
-  -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 \\
-  -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 \\
-  -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true \\
+exec java -Xms${RAM}M -Xmx${RAM}M \
+  -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 \
+  -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC \
+  -XX:+AlwaysPreTouch -XX:G1NewSizePercent=40 -XX:G1MaxNewSizePercent=50 \
+  -XX:G1HeapRegionSize=16M -XX:G1ReservePercent=20 \
+  -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 \
+  -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 \
+  -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 \
+  -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 \
+  -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true \
   -jar ${jar} nogui
 EOF
+    sed -i "s/\${RAM}/$ram/g" start.sh
   else
-    cat > start.sh <<EOF
+    cat > start.sh <<'EOF'
 #!/usr/bin/env bash
-java -Xms${ram}M -Xmx${ram}M \\
-  -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 \\
-  -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC \\
-  -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 \\
-  -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 \\
-  -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 \\
-  -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 \\
-  -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 \\
-  -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 \\
-  -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true \\
+exec java -Xms${RAM}M -Xmx${RAM}M \
+  -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 \
+  -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC \
+  -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 \
+  -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 \
+  -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 \
+  -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 \
+  -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 \
+  -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 \
+  -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true \
   -jar ${jar} nogui
 EOF
+    sed -i "s/\${RAM}/$ram/g" start.sh
   fi
   chmod +x start.sh
   ok "start.sh ساخته شد."
