@@ -1,0 +1,21 @@
+# Minecraft
+world/
+world_nether/
+world_the_end/
+logs/
+crash-reports/
+*.jar
+eula.txt
+server.properties
+banned-*.json
+ops.json
+whitelist.json
+usercache.json
+*.tar.gz
+*.log
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
