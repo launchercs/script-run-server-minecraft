@@ -3,35 +3,53 @@
   <a href="README_IR.md">IRفارسی</a>
 </p>
 
-<details>
+<details open>
 <summary><strong>🇬🇧 English</strong></summary>
 
 # 🎮 Minecraft Server Auto Setup
 
-A Bash script that automates the setup of a Minecraft Java Edition server, including Java installation, server configuration, and Playit.gg tunnel setup.
+Cross-platform scripts that automate the setup of a **Minecraft Java Edition** server —
+including Java installation, server configuration, and **Playit.gg** tunnel setup — all in one run.
+
+| Platform | Script |
+|---|---|
+| 🐧 Linux (multi-distro) | `Linux-setup-run.sh` |
+| 📱 Termux (Android)     | `termux-setup-run.sh` |
+| 🪟 Windows 10/11        | `windows-setup-run.bat` |
 
 ---
 
 ## ✨ Features
 
 - 🚀 **Automated Setup** — Installs and configures the Minecraft server automatically.
-- ☕ **Java Version Detection** — Selects a Java version based on the Minecraft version.
-- 📦 **Automatic Dependencies** — Installs the required packages and tools.
-- 🎮 **Latest Minecraft Version** — Retrieves the latest release information from Mojang's official version manifest.
-- 🧠 **RAM Configuration** — Allows you to specify the amount of RAM allocated to the server.
-- ⚙️ **Automatic Configuration** — Generates startup scripts and a basic `server.properties` file.
+- 🧩 **Multi-Distro Linux** — Works on Debian/Ubuntu, Fedora/RHEL, Arch, openSUSE, and Alpine.
+- ☕ **Adoptium (Temurin) JDK** — Installs the correct JDK (8 / 11 / 17 / 21 / 25) independent of distro repos.
+- 🎯 **Java Version Detection** — Selects the right Java version based on the Minecraft release.
+- 📦 **Automatic Dependencies** — Installs only what each distro actually needs.
+- 🎮 **Latest Minecraft Version** — Retrieved from Mojang's official version manifest.
+- 🧠 **RAM Configuration** — Via CLI argument, environment variable, or interactive prompt.
+- 🛠️ **Aikar Flags** — Two tuning presets (< 12 GB and ≥ 12 GB RAM).
+- ⚙️ **Automatic Configuration** — Generates `start.sh` and a basic `server.properties` file.
+- 🔒 **Safe Re-run** — Existing world, `eula.txt`, and `server.properties` are preserved.
+- 💽 **Automatic World Backup** — `.tar.gz` snapshot before any `server.jar` replacement.
 - 🌐 **Playit.gg Integration** — Sets up a tunnel to make your server accessible remotely.
-- 🖥️ **Screen Support** — Helps run the server in a persistent terminal session.
+- 🖥️ **Screen Support** — Runs the server in a persistent terminal session.
+- ♻️ **Optional systemd Service** — Auto-start on boot.
 
 ---
 
 ## 📋 Requirements
 
-- A compatible Linux system with `apt-get`
+**🐧 Linux**
+- One of: `apt-get`, `dnf`, `pacman`, `zypper`, `apk`
 - Internet connection
-- `sudo` privileges
+- `sudo` privileges (or run as `root`)
 - Sufficient RAM and storage
-- A [Playit.gg](https://playit.gg) account for tunnel connectivity
+- A [Playit.gg](https://playit.gg) account (free) for tunnel connectivity
+
+**📱 Termux** — Install from [F-Droid](https://f-droid.org/packages/com.termux/) (not Play Store).
+
+**🪟 Windows** — Windows 10/11 with `winget` (App Installer).
 
 ---
 
@@ -40,50 +58,4 @@ A Bash script that automates the setup of a Minecraft Java Edition server, inclu
 1. **Clone this repository:**
    ```bash
    git clone https://github.com/launchercs/script-run-server-minecraft.git
-   ```
-
-2. **Enter the project directory:**
-   ```bash
    cd script-run-server-minecraft
-   ```
-
-3. **Run the setup script:**
-   ```bash
-   chmod +x .run.sh
-   ./.run.sh
-   ```
-
-4. **Follow the on-screen instructions** to configure your server.
-
----
-
-## 🧩 Configuration
-
-The script can accept a RAM allocation argument, for example:
-
-```bash
-./.run.sh 4G
-```
-
-You can also configure the RAM allocation using the `ENV_MAX_RAM` environment variable.
-
----
-
-## ⚠️ Important Notes
-
-- This script is designed primarily for Linux distributions that use `apt-get`; it is **not guaranteed** to work directly in Termux or on Windows.
-- Review Minecraft's **End User License Agreement (EULA)** before running the server.
-- Keep your system and server software updated.
-- Java compatibility depends on the Minecraft version and the Java packages available on your system.
-
----
-
-## 👨‍💻 Author
-
-Created from scratch by [launchercs](https://github.com/launchercs).
-
----
-
-## 📜 License
-
-Check the repository for license information before redistributing or modifying this project.
