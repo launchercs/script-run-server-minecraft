@@ -1,61 +1,140 @@
 <p align="center">
   <a href="README.md">🇬🇧 English</a> |
-  <a href="README_IR.md">IRفارسی</a>
+  <a href="README_IR.md">IR فارسی</a>
 </p>
 
-<details open>
-<summary><strong>IRفارسی</strong></summary>
+# 🎮 Minecraft Server Auto Setup
 
-# 🎮 راه‌اندازی خودکار سرور ماینکرفت
+![License](https://img.shields.io/github/license/launchercs/script-run-server-minecraft)
+![Last Commit](https://img.shields.io/github/last-commit/launchercs/script-run-server-minecraft)
+![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Termux%20%7C%20Windows-blue)
+![Shell](https://img.shields.io/badge/shell-bash%20%7C%20batch-green)
 
-اسکریپت‌های چندسکویی که راه‌اندازی سرور **Minecraft Java Edition** را خودکار می‌کنند —
-شامل نصب جاوا، پیکربندی سرور، و راه‌اندازی تونل **Playit.gg** — همه در یک اجرا.
+Cross-platform scripts that automate setting up a **Minecraft Java Edition** server — Java installation, configuration, world backup, Aikar flags, and Playit.gg tunnel — all in one run.
 
-| پلتفرم | اسکریپت |
+## 📑 Table of Contents
+
+- [Features](#-features)
+- [Requirements](#-requirements)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Environment Variables](#-environment-variables)
+- [Troubleshooting](#-troubleshooting)
+- [FAQ](#-faq)
+- [Contributing](#-contributing)
+- [License](#-license)
+
+## ✨ Features
+
+- 🚀 **Automated Setup** — installs and configures everything.
+- 🧩 **Multi-Distro Linux** — Debian/Ubuntu, Fedora/RHEL, Arch, openSUSE, Alpine.
+- ☕ **Adoptium (Temurin) JDK** — installs the correct JDK (8 / 11 / 17 / 21).
+- 🎯 **Java Version Detection** — matches Minecraft release.
+- 📦 **Automatic Dependencies** — only what each distro needs.
+- 🎮 **Latest Minecraft Version** — from Mojang's official manifest.
+- 🧠 **RAM Configuration** — CLI arg, env var, or interactive prompt.
+- 🛠️ **Aikar Flags** — two presets (< 12 GB and ≥ 12 GB).
+- ⚙️ **Auto Configuration** — generates `start.sh` + `server.properties`.
+- 🔒 **Safe Re-run** — preserves `world`, `eula.txt`, `server.properties`.
+- 💽 **Automatic World Backup** — `.tar.gz` before jar replacement.
+- 🌐 **Playit.gg Integration** — public tunnel, no port-forwarding.
+- 🖥️ **Screen Support** — persistent terminal session.
+- ♻️ **Optional systemd Service** — auto-start on boot.
+- 🧪 **Dry-run Mode** — preview without changes.
+
+## 📋 Requirements
+
+| Platform | Requirements |
 |---|---|
-| 🐧 لینوکس (چند توزیع) | `Linux-setup-run.sh` |
-| 📱 Termux (اندروید)   | `termux-setup-run.sh` |
-| 🪟 ویندوز ۱۰/۱۱        | `windows-setup-run.bat` |
+| 🐧 Linux | `apt-get` / `dnf` / `pacman` / `zypper` / `apk`, internet, `sudo`, ≥ 3 GB free disk |
+| 📱 Termux | Install from [F-Droid](https://f-droid.org/en/packages/com.termux/) (not Play Store) |
+| 🪟 Windows | Windows 10/11 with `winget` (App Installer) |
 
----
+## 🚀 Installation
 
-## ✨ امکانات
+```bash
+git clone https://github.com/launchercs/script-run-server-minecraft.git
+cd script-run-server-minecraft
+chmod +x Linux-setup-run.sh termux-setup-run.sh
+```
 
-- 🚀 **راه‌اندازی خودکار** — سرور ماینکرفت را بدون دخالت دستی نصب و پیکربندی می‌کند.
-- 🧩 **پشتیبانی چند توزیع لینوکس** — Debian/Ubuntu، Fedora/RHEL، Arch، openSUSE و Alpine.
-- ☕ **نصب Adoptium (Temurin) JDK** — بدون وابستگی به مخازن توزیع، شامل Java 25.
-- 🎯 **تشخیص نسخه جاوا** — انتخاب نسخه مناسب جاوا بر اساس نسخه ماینکرفت.
-- 📦 **نصب خودکار پیش‌نیازها** — فقط بسته‌های مورد نیاز هر توزیع.
-- 🎮 **آخرین نسخه ماینکرفت** — دریافت از مانیفست رسمی موجانگ.
-- 🧠 **پیکربندی رم** — از طریق آرگومان، متغیر محیطی یا پرسش تعاملی.
-- 🛠️ **Aikar Flags** — دو پروفایل تنظیم جدا (زیر ۱۲GB و بالای ۱۲GB).
-- ⚙️ **پیکربندی خودکار** — ساخت `start.sh` و فایل پایه `server.properties`.
-- 🔒 **اجرای ایمن مجدد** — world، `eula.txt` و `server.properties` حفظ می‌شوند.
-- 💽 **بکاپ خودکار world** — اسنپ‌شات `.tar.gz` پیش از هر جایگزینی `server.jar`.
-- 🌐 **یکپارچگی با Playit.gg** — راه‌اندازی تونل برای دسترسی از راه دور.
-- 🖥️ **پشتیبانی از Screen** — اجرای سرور در یک نشست ترمینال پایدار.
-- ♻️ **سرویس systemd (اختیاری)** — اجرای خودکار هنگام بوت.
+## 🎮 Usage
 
----
+### Linux
 
-## 📋 پیش‌نیازها
+```bash
+./Linux-setup-run.sh                       # interactive
+./Linux-setup-run.sh --ram 4096 -v 1.21.4  # explicit
+./Linux-setup-run.sh --dry-run             # preview
+```
 
-**🐧 لینوکس**
-- یکی از: `apt-get`، `dnf`، `pacman`، `zypper`، `apk`
-- اتصال به اینترنت
-- دسترسی `sudo` (یا اجرا به‌عنوان `root`)
-- رم و فضای ذخیره‌سازی کافی
-- یک حساب [Playit.gg](https://playit.gg) (رایگان) برای اتصال تونل
+### Termux
 
-**📱 Termux** — از [F-Droid](https://f-droid.org/packages/com.termux/) نصب شود (نه Play Store).
+```bash
+./termux-setup-run.sh --ram 1024
+```
 
-**🪟 ویندوز** — ویندوز ۱۰/۱۱ به‌همراه `winget` (App Installer).
+### Windows
 
----
+```bat
+windows-setup-run.bat 4096 1.21.4
+```
 
-## 🚀 شروع کار
+### Running the server
 
-۱. **کلون کردن مخزن:**
-   ```bash
-   git clone https://github.com/launchercs/script-run-server-minecraft.git
-   cd script-run-server-minecraft
+```bash
+./start.sh
+screen -S mc ./start.sh      # Ctrl+A then D to detach
+screen -r mc                 # reattach
+```
+
+## 🔧 Environment Variables
+
+| Variable | Description | Default |
+|---|---|---|
+| `MC_RAM` | RAM in MB | `2048` |
+| `MC_VERSION` | Minecraft version | `latest` |
+| `PLAYIT_SECRET` | Playit.gg token | — |
+| `LOG_FILE` | Log path | `setup.log` |
+
+## 🐛 Troubleshooting
+
+| Problem | Fix |
+|---|---|
+| Java not installed | Check Adoptium repo: `java -version` |
+| Port 25565 busy | `ss -tulpn \| grep 25565` then kill |
+| Playit.gg not connecting | Re-run `playit`, reset token |
+| World lost | Restore from `world-backup-*.tar.gz` |
+| Permission errors | Run with `sudo` (Linux) or as admin (Windows) |
+
+Verbose logs:
+
+```bash
+bash -x ./Linux-setup-run.sh --ram 2048
+```
+
+## ❓ FAQ
+
+**Does it work on Raspberry Pi?** Yes — use Alpine or Debian ARM, ≥ 1 GB RAM recommended.
+
+**Forge/Fabric support?** No, Vanilla only. Replace `server.jar` manually after setup.
+
+**Multiple servers?** Yes — copy folder, change `server-port`.
+
+## 🤝 Contributing
+
+1. Fork the repo
+2. `git checkout -b feature/amazing`
+3. `git commit -m 'Add amazing feature'`
+4. `git push origin feature/amazing`
+5. Open a Pull Request
+
+Run before submitting:
+
+```bash
+shellcheck Linux-setup-run.sh termux-setup-run.sh common/lib.sh
+```
+
+## 📜 License
+
+MIT — see [LICENSE](LICENSE).
